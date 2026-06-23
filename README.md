@@ -671,8 +671,4 @@ See **[docs/model_risk.md](docs/model_risk.md)** for the complete model inventor
 
 ---
 
-## License
-
-Proprietary — Internal Use Only. Not for distribution outside the firm.
-
 Built by Securities Finance Quant Engineering for the Global Securities Lending & Financing Desk, Prime Brokerage Division.
