@@ -2,7 +2,7 @@
 
 **Institutional Securities Lending, Financing, Repo & Prime Brokerage Decision-Support Engine**
 
-> _Production-oriented. Desk-usable. Auditable. Explainable._
+SecFi Prime Platform is an end-to-end decision-support and optimization engine for a global securities lending, financing, repo, and prime brokerage desk. Built to institutional standards, it combines ten integrated analytical engines — covering counterparty exposure, capital and RWA approximation, book optimization, pricing intelligence, recall and buy-in risk, corporate action impact, custodian reconciliation, collateral optimization, inventory management, and growth analysis — into a single, auditable, human-in-the-loop platform. Built for the desk head and their full team — traders, risk managers, funding strategists, operations, and senior management — with a governance framework, model risk documentation, and operational runbook suitable for a top-tier prime brokerage environment.
 
 ---
 
