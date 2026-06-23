@@ -1,0 +1,36 @@
+platform:
+  environment_label: "prod"
+
+logging:
+  level: "INFO"
+
+database:
+  host: "${SECFI_DB_HOST}"
+  port: 5432
+  name: "secfi_platform_prod"
+  user: "${SECFI_DB_USER}"
+  password: "${SECFI_DB_PASSWORD}"
+  sslmode: "require"
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_allowed_origins: ["${SECFI_INTERNAL_GATEWAY_ORIGIN}"]
+
+ingestion:
+  sources:
+    equilend:
+      base_url: "${EQUILEND_API_BASE_URL}"
+      api_key: "${EQUILEND_API_KEY}"
+    datalend:
+      base_url: "${DATALEND_API_BASE_URL}"
+      api_key: "${DATALEND_API_KEY}"
+
+feature_flags:
+  enable_optimization_engine: true
+  enable_auto_alert_dispatch: true
+
+governance:
+  require_model_approval_before_deploy: true
+  model_owner: "Securities Finance Quant Engineering"
+  last_validation_date: "REQUIRED — populate at each release per docs/model_risk.md"

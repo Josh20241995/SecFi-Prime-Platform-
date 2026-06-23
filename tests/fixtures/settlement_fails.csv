@@ -1,0 +1,4 @@
+position_id,security_internal_id,fail_age_days,fail_quantity,counterparty_id,is_desk_receiving
+P003,SEC003,6,20000,CPTY003,false
+P002,SEC002,2,50000,CPTY002,true
+P011,SEC003,3,8000,CPTY005,false

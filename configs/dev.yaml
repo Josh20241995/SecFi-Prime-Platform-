@@ -1,0 +1,21 @@
+platform:
+  environment_label: "dev"
+
+logging:
+  level: "DEBUG"
+
+database:
+  host: "localhost"
+  port: 5432
+  name: "secfi_platform_dev"
+  user: "${SECFI_DB_USER:-secfi_dev}"
+  password: "${SECFI_DB_PASSWORD:-dev_local_only_not_a_real_secret}"
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  cors_allowed_origins: ["http://localhost:3000"]
+
+feature_flags:
+  enable_optimization_engine: true
+  enable_auto_alert_dispatch: false   # dev: alerts computed but not pushed to Slack/email

@@ -1,0 +1,6 @@
+event_id,security_internal_id,action_type,announce_date,record_date,ex_date,effective_date,payment_date,is_mandatory,election_deadline,terms_summary,source
+CA001,SEC001,CASH_DIVIDEND,2026-06-01,2026-06-22,2026-06-21,,2026-07-01,true,,Quarterly cash dividend USD 0.26 per share,CORP_ACTIONS_FEED
+CA002,SEC003,REVERSE_SPLIT,2026-06-10,,,2026-06-20,,true,,1-for-20 reverse stock split effective 2026-06-20,CORP_ACTIONS_FEED
+CA003,SEC005,MERGER,2026-05-01,2026-07-10,,,,false,2026-07-05,Cash/stock election merger consideration; election deadline 2026-07-05,CORP_ACTIONS_FEED
+CA004,SEC004,SPLIT,2026-06-15,,,2026-08-10,,true,,2-for-1 forward split of ETF units,CORP_ACTIONS_FEED
+CA005,SEC006,BOND_CALL,2026-06-01,,,2026-07-01,2026-07-01,true,,Issuer calls notes at 101.0,CORP_ACTIONS_FEED

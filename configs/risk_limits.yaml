@@ -1,0 +1,35 @@
+# Counterparty exposure limit templates by tier, in USD.
+# Actual per-counterparty limits should come from the firm's credit risk
+# system; these are FALLBACK defaults applied when no firm-set limit is
+# present, per "fallback logic when data is incomplete" requirement.
+
+limit_templates_usd:
+  TIER_1_PRIME: 500000000
+  TIER_2_STANDARD: 250000000
+  TIER_3_WATCH: 75000000
+  TIER_4_RESTRICTED: 10000000
+
+haircuts_bps:
+  CASH: 0
+  GOVT_SECURITIES: 200
+  AGENCY_SECURITIES: 300
+  EQUITIES: 1500
+  LETTER_OF_CREDIT: 500
+  NON_CASH_OTHER: 2000
+
+stress_scenarios:
+  - name: BASE
+  - name: EQUITY_DOWN_10
+    equity_price_shock_pct: -0.10
+  - name: EQUITY_DOWN_25_CRISIS
+    equity_price_shock_pct: -0.25
+    spread_widening_bps: 150
+  - name: RATES_UP_100BP
+    rate_shock_bps: 100
+  - name: FX_USD_UP_10
+    fx_shock_pct: 0.10
+  - name: COMBINED_STRESS
+    equity_price_shock_pct: -0.15
+    rate_shock_bps: 75
+    fx_shock_pct: 0.08
+    spread_widening_bps: 100

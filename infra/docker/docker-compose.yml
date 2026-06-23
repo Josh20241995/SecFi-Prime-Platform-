@@ -1,0 +1,41 @@
+# Local development stack: API + Postgres (matching sql/schemas/).
+# Production deployment uses the firm's container orchestration platform
+# (Kubernetes/ECS/internal PaaS) with this same image — docker-compose
+# here is for local engineer workstations only, not a production topology.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: secfi_platform_dev
+      POSTGRES_USER: secfi_dev
+      POSTGRES_PASSWORD: dev_local_only_not_a_real_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - secfi_pgdata:/var/lib/postgresql/data
+      - ../../sql/schemas:/docker-entrypoint-initdb.d/01-schemas:ro
+      - ../../sql/views:/docker-entrypoint-initdb.d/02-views:ro
+      - ../../sql/procedures:/docker-entrypoint-initdb.d/03-procedures:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U secfi_dev -d secfi_platform_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      SECFI_DB_HOST: postgres
+      SECFI_DB_USER: secfi_dev
+      SECFI_DB_PASSWORD: dev_local_only_not_a_real_secret
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  secfi_pgdata:

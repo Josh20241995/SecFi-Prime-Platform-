@@ -1,0 +1,89 @@
+platform:
+  name: "secfi-prime-platform"
+  desk: "Global Securities Lending & Financing — Prime Brokerage"
+  timezone: "America/New_York"
+
+data_quality:
+  staleness_penalty_curve:
+    half_life_minutes: 240
+    floor: 0.10
+  market_rates_stale_after_hours: 24
+  custodian_feed_stale_after_hours: 30   # custodians typically T+1; alert if older than that plus buffer
+
+risk_limits:
+  default_counterparty_limit_usd: 250000000
+  wwr_concentration_threshold_pct: 0.35
+  issuer_concentration_cap_pct: 0.15
+
+capital:
+  target_cet1_ratio: 0.115
+  cost_of_capital_pct: 0.12
+  sft_addon_pct: 0.00
+  # Risk weights MUST be supplied/confirmed by Treasury/Capital Management before
+  # any production use beyond directional desk decision support.
+  # See risk/capital_rwa.py DEFAULT_RISK_WEIGHTS_PCT for the reference table loaded
+  # when this section is not overridden.
+
+pricing:
+  specialness_thresholds:
+    gc_fee_ceiling_bps: 25
+    warm_trend_bps_per_week: 10
+    special_fee_floor_bps: 100
+    htb_fee_floor_bps: 300
+    htb_utilization_floor: 0.90
+    deep_special_fee_floor_bps: 1000
+  min_actionable_gap_bps: 5
+
+optimization:
+  destination_rate_haircut_bps: 1
+  max_single_move_pct_of_position: 1.0
+  min_economic_pickup_bps: 2.0
+  issuer_concentration_cap_pct: 0.15
+
+recall_buyin:
+  regime_notice_days: 4   # PLACEHOLDER — review against applicable market/regulatory regime per security domicile
+
+corporate_actions:
+  forward_window_days: 60
+
+alerting:
+  thresholds:
+    limit_utilization_warn_pct: 0.85
+    limit_utilization_breach_pct: 1.00
+    stale_data_minutes: 240
+    recall_urgency_alert_score: 70
+    buyin_risk_alert_score: 70
+  routing:
+    COUNTERPARTY_LIMIT: ["desk-risk-channel", "counterparty-risk-team"]
+    DATA_FRESHNESS: ["platform-engineering-channel"]
+    RECALL_BUYIN: ["desk-trading-channel", "ops-settlements-team"]
+    RECONCILIATION_BREAK: ["ops-recon-team"]
+    CORPORATE_ACTION: ["desk-trading-channel", "corporate-actions-team"]
+
+ingestion:
+  sources:
+    equilend:
+      enabled: true
+      file_path: "tests/fixtures/market_rates_equilend.csv"
+    datalend:
+      enabled: true
+      file_path: "tests/fixtures/market_rates_datalend.csv"
+    internal_trade_capture:
+      enabled: true
+      file_path: "tests/fixtures/positions.csv"
+    custodian_feed:
+      enabled: true
+      file_path: "tests/fixtures/custodian_positions.csv"
+    corporate_actions_feed:
+      enabled: true
+      file_path: "tests/fixtures/corporate_actions.csv"
+    settlement_fails:
+      enabled: true
+      file_path: "tests/fixtures/settlement_fails.csv"
+    fx_rates:
+      enabled: true
+      file_path: "tests/fixtures/fx_rates.csv"
+
+logging:
+  level: "INFO"
+  format: "json"

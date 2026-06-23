@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "secfi-prime-platform"
+version = "1.0.0"
+description = "Institutional securities lending, financing, repo, and prime brokerage decision-support and optimization platform."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Proprietary - Internal Use Only" }
+authors = [{ name = "Securities Finance Quant Engineering" }]
+
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "pyyaml>=6.0",
+    "pydantic>=2.5",
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.27",
+    "python-dateutil>=2.8",
+]
+
+[project.optional-dependencies]
+# Swap the LP relaxation in optimization/book_optimizer.py for a true MILP
+# solver in production by installing one of these and following the upgrade
+# path documented in that module's docstring + docs/algorithms.md.
+milp = ["pulp>=2.7"]
+# Production persistence layer (sql/schemas/*.sql target Postgres 14+).
+db = ["psycopg[binary]>=3.1", "sqlalchemy>=2.0"]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "black>=24.0",
+    "ruff>=0.3",
+    "mypy>=1.9",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+addopts = "-ra -q"
+
+[tool.black]
+line-length = 110
+target-version = ["py311"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+disallow_untyped_defs = false
